@@ -2,13 +2,13 @@
 
 > **Projet Technologie de l'Internet - ENSIM**  
 > Auteur : KOUAM Brice  
-> Année : 2024-2025
+> Année : 2025-2026
 
 ---
 
 ## 📋 Description
 
-**EcoTrack** est une application web permettant de calculer son empreinte carbone personnelle et de recevoir des conseils personnalisés pour la réduire. Ce projet a été réalisé dans le cadre du cours de Technologie de l'Internet à l'École Nationale Supérieure d'Ingénieurs du Mans (ENSIM).
+**EcoTrack** est un site web permettant de calculer son empreinte carbone personnelle et de recevoir des conseils personnalisés pour la réduire. Ce projet a été réalisé dans le cadre du cours de Technologie de l'Internet à l'École Nationale Supérieure d'Ingénieurs du Mans (ENSIM).
 
 ### Fonctionnalités principales
 
@@ -22,20 +22,17 @@
 
 ## 🛠️ Technologies Utilisées
 
-### Frontend
+### Frontend (principal)
 - **HTML5** sémantique (header, main, section, footer, article)
 - **CSS3** avec reset personnalisé et animations
 - **TailwindCSS** via CDN pour le design
 - **JavaScript ES6+** pour l'interactivité
 - **Chart.js** pour les graphiques
 
-### Backend
-- **PHP 8** avec programmation orientée objet
-- **PDO** avec requêtes préparées (protection SQL injection)
-- **Sessions** et **Cookies** sécurisés
-
-### Base de données
-- **MySQL** / **MariaDB**
+### PHP (gestion utilisateurs)
+- **Sessions** et **Cookies** pour l'authentification
+- **Formulaires** avec méthodes GET/POST
+- Connexion **MySQL** pour stockage utilisateurs
 
 ### Outils
 - **Git** pour le versionnement
@@ -109,14 +106,12 @@ KOUAM_Brice_Projet/
 
 ---
 
-## 🔐 Sécurité Implémentée
+## 🔐 Gestion des Utilisateurs
 
-- **Hachage des mots de passe** avec `password_hash()` (BCRYPT, cost 12)
-- **Requêtes préparées** (protection SQL injection)
-- **Validation côté client ET serveur**
-- **Protection XSS** avec `htmlspecialchars()`
-- **Sessions sécurisées** (régénération ID, timeout)
-- **Cookies sécurisés** (HttpOnly, SameSite)
+- **Sessions PHP** pour maintenir la connexion
+- **Cookies** pour la fonctionnalité "Se souvenir de moi"
+- **Hachage des mots de passe** avec `password_hash()`
+- **Validation des formulaires** côté client (JavaScript)
 
 ---
 
