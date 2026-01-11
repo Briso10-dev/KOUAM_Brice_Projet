@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Inscription - EcoTrack">
+    <title>Inscription - EcoTrack</title>
+    
+    <!-- Google Fonts - Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'poppins': ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        'eco-green': '#22c55e',
+                        'eco-dark': '#15803d',
+                        'eco-light': '#86efac',
+                        'eco-bg': '#f0fdf4',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="font-poppins bg-eco-bg min-h-screen">
+    
+    <!-- Header simplifié -->
+    <header class="bg-white shadow-sm">
+        <nav class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <a href="index.html" class="flex items-center space-x-2">
+                    <div class="w-10 h-10 bg-eco-green rounded-full flex items-center justify-center">
+                        <span class="text-white text-xl">🌱</span>
+                    </div>
+                    <span class="text-2xl font-bold text-eco-dark">EcoTrack</span>
+                </a>
+                <a href="connexion.html" class="text-eco-dark hover:text-eco-green transition-colors">
+                    Déjà inscrit ? <span class="font-semibold">Connexion</span>
+                </a>
+            </div>
+        </nav>
+    </header>
+    
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-12">
+        <div class="max-w-md mx-auto">
+            <!-- Card d'inscription -->
+            <div class="bg-white rounded-2xl shadow-xl p-8">
+                <div class="text-center mb-8">
+                    <h1 class="text-3xl font-bold text-gray-800 mb-2">Créer un compte</h1>
+                    <p class="text-gray-600">Rejoignez la communauté EcoTrack</p>
+                </div>
+                
+                <!-- Formulaire d'inscription -->
+                <form id="inscription-form" action="php/inscription.php" method="POST" novalidate>
+                    
+                    <!-- Nom -->
+                    <div class="form-group mb-5">
+                        <label for="nom" class="block text-gray-700 font-medium mb-2">Nom *</label>
+                        <input 
+                            type="text" 
+                            id="nom" 
+                            name="nom" 
+                            class="form-input w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-eco-green focus:outline-none transition-all"
+                            placeholder="Votre nom"
+                            required
+                            minlength="2"
+                            pattern="^[A-Za-zÀ-ÿ\s\-]+$"
+                        >
+                        <p class="form-error text-red-500 text-sm mt-1 hidden" id="nom-error">
+                            Le nom doit contenir au moins 2 caractères (lettres uniquement)
+                        </p>
+                    </div>
+                    
+                    <!-- Prénom -->
+                    <div class="form-group mb-5">
+                        <label for="prenom" class="block text-gray-700 font-medium mb-2">Prénom *</label>
+                        <input 
+                            type="text" 
+                            id="prenom" 
+                            name="prenom" 
+                            class="form-input w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-eco-green focus:outline-none transition-all"
+                            placeholder="Votre prénom"
+                            required
+                            minlength="2"
+                            pattern="^[A-Za-zÀ-ÿ\s\-]+$"
+                        >
+                        <p class="form-error text-red-500 text-sm mt-1 hidden" id="prenom-error">
+                            Le prénom doit contenir au moins 2 caractères (lettres uniquement)
+                        </p>
+                    </div>
+                    
+                    <!-- Email -->
+                    <div class="form-group mb-5">
+                        <label for="email" class="block text-gray-700 font-medium mb-2">Email *</label>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email" 
+                            class="form-input w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-eco-green focus:outline-none transition-all"
+                            placeholder="votre@email.com"
+                            required
+                        >
+                        <p class="form-error text-red-500 text-sm mt-1 hidden" id="email-error">
+                            Veuillez entrer une adresse email valide
+                        </p>
+                    </div>
+                    
+                    <!-- Téléphone -->
+                    <div class="form-group mb-5">
+                        <label for="telephone" class="block text-gray-700 font-medium mb-2">Téléphone</label>
+                        <input 
+                            type="tel" 
+                            id="telephone" 
+                            name="telephone" 
+                            class="form-input w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-eco-green focus:outline-none transition-all"
+                            placeholder="06.12.34.56.78"
+                            pattern="^[0-9]{2}\.[0-9]{2}\.[0-9]{2}\.[0-9]{2}\.[0-9]{2}$"
+                        >
+                        <p class="form-error text-red-500 text-sm mt-1 hidden" id="telephone-error">
+                            Format attendu : 00.00.00.00.00
+                        </p>
+                    </div>
+                    
+                    <!-- Mot de passe -->
+                    <div class="form-group mb-5">
+                        <label for="password" class="block text-gray-700 font-medium mb-2">Mot de passe *</label>
+                        <div class="relative">
+                            <input 
+                                type="password" 
+                                id="password" 
+                                name="password" 
+                                class="form-input w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-eco-green focus:outline-none transition-all pr-12"
+                                placeholder="••••••••"
+                                required
+                                minlength="8"
+                            >
+                            <button 
+                                type="button" 
+                                id="toggle-password"
+                                class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-eco-green"
+                            >
+                                👁️
+                            </button>
+                        </div>
+                        <p class="form-error text-red-500 text-sm mt-1 hidden" id="password-error">
+                            8 caractères min. avec 1 majuscule, 1 chiffre et 1 caractère spécial ($?!&#@)
+                        </p>
+                        <!-- Indicateur de force du mot de passe -->
+                        <div class="mt-2">
+                            <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
+                                <div id="password-strength" class="h-full transition-all duration-300" style="width: 0%"></div>
+                            </div>
+                            <p id="password-strength-text" class="text-xs mt-1 text-gray-500"></p>
+                        </div>
+                    </div>
+                    
+                    <!-- Confirmation mot de passe -->
+                    <div class="form-group mb-6">
+                        <label for="password-confirm" class="block text-gray-700 font-medium mb-2">Confirmer le mot de passe *</label>
+                        <input 
+                            type="password" 
+                            id="password-confirm" 
+                            name="password_confirm" 
+                            class="form-input w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-eco-green focus:outline-none transition-all"
+                            placeholder="••••••••"
+                            required
+                        >
+                        <p class="form-error text-red-500 text-sm mt-1 hidden" id="password-confirm-error">
+                            Les mots de passe ne correspondent pas
+                        </p>
+                    </div>
+                    
+                    <!-- Conditions d'utilisation -->
+                    <div class="form-group mb-6">
+                        <label class="flex items-start space-x-3 cursor-pointer">
+                            <input 
+                                type="checkbox" 
+                                id="conditions" 
+                                name="conditions" 
+                                class="mt-1 w-5 h-5 text-eco-green border-gray-300 rounded focus:ring-eco-green"
+                                required
+                            >
+                            <span class="text-sm text-gray-600">
+                                J'accepte les <a href="#" class="text-eco-green hover:underline">conditions d'utilisation</a> 
+                                et la <a href="#" class="text-eco-green hover:underline">politique de confidentialité</a> *
+                            </span>
+                        </label>
+                        <p class="form-error text-red-500 text-sm mt-1 hidden" id="conditions-error">
+                            Vous devez accepter les conditions d'utilisation
+                        </p>
+                    </div>
+                    
+                    <!-- Bouton d'inscription -->
+                    <button 
+                        type="submit" 
+                        class="w-full bg-eco-green text-white py-4 rounded-xl font-semibold text-lg hover:bg-eco-dark transition-all transform hover:scale-[1.02] shadow-lg"
+                    >
+                        Créer mon compte
+                    </button>
+                </form>
+                
+                <!-- Séparateur -->
+                <div class="flex items-center my-6">
+                    <div class="flex-1 border-t border-gray-200"></div>
+                    <span class="px-4 text-gray-500 text-sm">ou</span>
+                    <div class="flex-1 border-t border-gray-200"></div>
+                </div>
+                
+                <!-- Lien connexion -->
+                <p class="text-center text-gray-600">
+                    Vous avez déjà un compte ? 
+                    <a href="connexion.html" class="text-eco-green font-semibold hover:underline">Connectez-vous</a>
+                </p>
+            </div>
+            
+            <!-- Info sécurité -->
+            <div class="mt-6 text-center text-sm text-gray-500">
+                <p>🔒 Vos données sont sécurisées et chiffrées</p>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Footer simplifié -->
+    <footer class="bg-gray-900 text-white py-6 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-gray-400">&copy; 2026 EcoTrack - KOUAM Brice. Tous droits réservés.</p>
+        </div>
+    </footer>
+    
+    <!-- JavaScript validation -->
+    <script src="js/validation.js"></script>
+</body>
+</html>
