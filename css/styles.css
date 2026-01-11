@@ -1,0 +1,458 @@
+/*
+ * EcoTrack - Feuille de styles personnalisée
+ * Auteur: KOUAM Brice
+ * Projet: Technologie de l'Internet - ENSIM
+ */
+
+/* ===== RESET CSS ===== */
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 10px; /* Base pour calculs en rem */
+    scroll-behavior: smooth;
+}
+
+body {
+    font-size: 1.6rem;
+    width: 100vw;
+    min-height: 100vh;
+    overflow-x: hidden;
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #ffffff;
+}
+
+/* ===== VARIABLES CSS ===== */
+:root {
+    --eco-green: #22c55e;
+    --eco-dark: #15803d;
+    --eco-light: #86efac;
+    --eco-bg: #f0fdf4;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-400: #9ca3af;
+    --gray-600: #4b5563;
+    --gray-800: #1f2937;
+    --gray-900: #111827;
+    --white: #ffffff;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes bounce-slow {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+@keyframes countUp {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes gradientBG {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.animate-bounce-slow {
+    animation: bounce-slow 3s ease-in-out infinite;
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+}
+
+.animate-slide-left {
+    animation: slideInLeft 0.6s ease-out forwards;
+}
+
+.animate-slide-right {
+    animation: slideInRight 0.6s ease-out forwards;
+}
+
+.animate-pulse-slow {
+    animation: pulse 2s ease-in-out infinite;
+}
+
+/* ===== LIENS ET BOUTONS ===== */
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: var(--transition);
+}
+
+button {
+    cursor: pointer;
+    font-family: inherit;
+    border: none;
+    background: none;
+}
+
+/* ===== IMAGES ===== */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* ===== FORMULAIRES ===== */
+input,
+textarea,
+select {
+    font-family: inherit;
+    font-size: inherit;
+    outline: none;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: var(--eco-green);
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
+}
+
+/* ===== STYLES PERSONNALISÉS ===== */
+
+/* Header sticky */
+header {
+    transition: var(--transition);
+}
+
+header.scrolled {
+    box-shadow: var(--shadow-lg);
+}
+
+/* Menu mobile animation */
+#mobile-menu {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+#mobile-menu.active {
+    max-height: 500px;
+}
+
+/* Boutons personnalisés */
+.btn-primary {
+    background-color: var(--eco-green);
+    color: var(--white);
+    padding: 1.2rem 2.4rem;
+    border-radius: 1rem;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.btn-primary:hover {
+    background-color: var(--eco-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: var(--eco-dark);
+    padding: 1.2rem 2.4rem;
+    border: 2px solid var(--eco-green);
+    border-radius: 1rem;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.btn-secondary:hover {
+    background-color: var(--eco-light);
+}
+
+/* Cards */
+.card {
+    background-color: var(--white);
+    border-radius: 1.5rem;
+    padding: 2rem;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Stats counter animation */
+.stat-item {
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* Formulaire styles */
+.form-group {
+    margin-bottom: 2rem;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--gray-800);
+}
+
+.form-input {
+    width: 100%;
+    padding: 1.2rem 1.6rem;
+    border: 2px solid var(--gray-200);
+    border-radius: 1rem;
+    font-size: 1.6rem;
+    transition: var(--transition);
+}
+
+.form-input:focus {
+    border-color: var(--eco-green);
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
+}
+
+.form-input.error {
+    border-color: #ef4444;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+}
+
+.form-input.success {
+    border-color: var(--eco-green);
+}
+
+.form-error {
+    color: #ef4444;
+    font-size: 1.4rem;
+    margin-top: 0.5rem;
+    display: none;
+}
+
+.form-error.visible {
+    display: block;
+}
+
+/* Tooltip */
+.tooltip {
+    position: relative;
+}
+
+.tooltip::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--gray-900);
+    color: var(--white);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 1.2rem;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition);
+}
+
+.tooltip:hover::after {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Progress bar */
+.progress-bar {
+    width: 100%;
+    height: 1rem;
+    background-color: var(--gray-200);
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--eco-green), var(--eco-dark));
+    border-radius: 0.5rem;
+    transition: width 0.5s ease-out;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+
+/* Tablette */
+@media screen and (max-width: 1024px) {
+    html {
+        font-size: 9px;
+    }
+    
+    .container {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+}
+
+/* Mobile */
+@media screen and (max-width: 768px) {
+    html {
+        font-size: 8px;
+    }
+    
+    body {
+        font-size: 1.8rem;
+    }
+    
+    h1 {
+        font-size: 3.2rem;
+    }
+    
+    h2 {
+        font-size: 2.8rem;
+    }
+    
+    .container {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+}
+
+/* Petit mobile */
+@media screen and (max-width: 480px) {
+    html {
+        font-size: 7px;
+    }
+    
+    .btn-primary,
+    .btn-secondary {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* ===== PRINT STYLES ===== */
+@media print {
+    body {
+        background-color: white;
+        color: black;
+    }
+    
+    header,
+    footer,
+    nav,
+    .no-print {
+        display: none !important;
+    }
+    
+    img {
+        max-width: 300px;
+    }
+    
+    a::after {
+        content: " (" attr(href) ")";
+    }
+    
+    .print-footer::after {
+        content: "Document imprimé depuis EcoTrack - www.ecotrack.fr";
+        display: block;
+        margin-top: 2rem;
+        font-style: italic;
+    }
+}
+
+/* ===== LOADER ===== */
+.loader {
+    width: 50px;
+    height: 50px;
+    border: 4px solid var(--gray-200);
+    border-top-color: var(--eco-green);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ===== SCROLLBAR PERSONNALISÉE ===== */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--gray-100);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--eco-green);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--eco-dark);
+}
+
+/* ===== SÉLECTION TEXTE ===== */
+::selection {
+    background-color: var(--eco-light);
+    color: var(--eco-dark);
+}

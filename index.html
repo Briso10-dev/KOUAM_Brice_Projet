@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="EcoTrack - Calculez et réduisez votre empreinte carbone personnelle">
+    <meta name="author" content="KOUAM Brice">
+    <title>EcoTrack - Calculateur d'Empreinte Carbone</title>
+    
+    <!-- Google Fonts - Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'poppins': ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        'eco-green': '#22c55e',
+                        'eco-dark': '#15803d',
+                        'eco-light': '#86efac',
+                        'eco-bg': '#f0fdf4',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="font-poppins">
+    
+    <!-- Header -->
+    <header class="bg-white shadow-md fixed w-full top-0 z-50">
+        <nav class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+                <div class="flex items-center space-x-2">
+                    <div class="w-10 h-10 bg-eco-green rounded-full flex items-center justify-center">
+                        <span class="text-white text-xl">🌱</span>
+                    </div>
+                    <span class="text-2xl font-bold text-eco-dark">EcoTrack</span>
+                </div>
+                
+                <!-- Menu Desktop -->
+                <ul class="hidden md:flex space-x-8">
+                    <li><a href="index.html" class="text-eco-dark font-medium hover:text-eco-green transition-colors">Accueil</a></li>
+                    <li><a href="calculateur.html" class="text-gray-600 hover:text-eco-green transition-colors">Calculateur</a></li>
+                    <li><a href="conseils.html" class="text-gray-600 hover:text-eco-green transition-colors">Conseils</a></li>
+                    <li><a href="a-propos.html" class="text-gray-600 hover:text-eco-green transition-colors">À propos</a></li>
+                </ul>
+                
+                <!-- Boutons Connexion/Inscription -->
+                <div class="hidden md:flex space-x-4">
+                    <a href="connexion.html" class="px-4 py-2 text-eco-dark border border-eco-dark rounded-lg hover:bg-eco-dark hover:text-white transition-all">Connexion</a>
+                    <a href="inscription.html" class="px-4 py-2 bg-eco-green text-white rounded-lg hover:bg-eco-dark transition-all">Inscription</a>
+                </div>
+                
+                <!-- Menu Hamburger Mobile -->
+                <button id="menu-toggle" class="md:hidden flex flex-col space-y-1.5 p-2">
+                    <span class="block w-6 h-0.5 bg-eco-dark"></span>
+                    <span class="block w-6 h-0.5 bg-eco-dark"></span>
+                    <span class="block w-6 h-0.5 bg-eco-dark"></span>
+                </button>
+            </div>
+            
+            <!-- Menu Mobile -->
+            <div id="mobile-menu" class="hidden md:hidden mt-4 pb-4">
+                <ul class="flex flex-col space-y-4">
+                    <li><a href="index.html" class="block text-eco-dark font-medium">Accueil</a></li>
+                    <li><a href="calculateur.html" class="block text-gray-600">Calculateur</a></li>
+                    <li><a href="conseils.html" class="block text-gray-600">Conseils</a></li>
+                    <li><a href="a-propos.html" class="block text-gray-600">À propos</a></li>
+                    <li class="pt-4 flex flex-col space-y-2">
+                        <a href="connexion.html" class="text-center px-4 py-2 text-eco-dark border border-eco-dark rounded-lg">Connexion</a>
+                        <a href="inscription.html" class="text-center px-4 py-2 bg-eco-green text-white rounded-lg">Inscription</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section id="hero" class="min-h-screen flex items-center justify-center bg-gradient-to-br from-eco-bg to-white pt-20">
+            <div class="container mx-auto px-4 py-16">
+                <div class="flex flex-col lg:flex-row items-center gap-12">
+                    <!-- Texte Hero -->
+                    <div class="flex-1 text-center lg:text-left">
+                        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-800 mb-6">
+                            Mesurez votre <span class="text-eco-green">impact</span> sur la planète
+                        </h1>
+                        <p class="text-lg md:text-xl text-gray-600 mb-8 max-w-2xl">
+                            Découvrez votre empreinte carbone personnelle et obtenez des conseils personnalisés pour réduire votre impact environnemental au quotidien.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                            <a href="calculateur.html" class="px-8 py-4 bg-eco-green text-white text-lg font-semibold rounded-xl hover:bg-eco-dark transition-all transform hover:scale-105 shadow-lg">
+                                Calculer mon empreinte
+                            </a>
+                            <a href="#features" class="px-8 py-4 border-2 border-eco-green text-eco-dark text-lg font-semibold rounded-xl hover:bg-eco-light transition-all">
+                                En savoir plus
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Image Hero -->
+                    <div class="flex-1">
+                        <div class="relative">
+                            <div class="w-full max-w-lg mx-auto">
+                                <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=600&h=400&fit=crop" 
+                                     alt="Protection de l'environnement" 
+                                     class="rounded-2xl shadow-2xl">
+                            </div>
+                            <!-- Badges flottants -->
+                            <div class="absolute -top-4 -left-4 bg-white p-4 rounded-xl shadow-lg animate-bounce-slow">
+                                <span class="text-3xl">🌍</span>
+                                <p class="text-sm font-medium text-gray-700">Planète</p>
+                            </div>
+                            <div class="absolute -bottom-4 -right-4 bg-white p-4 rounded-xl shadow-lg animate-bounce-slow" style="animation-delay: 0.5s;">
+                                <span class="text-3xl">♻️</span>
+                                <p class="text-sm font-medium text-gray-700">Recyclage</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Stats Section -->
+        <section class="py-16 bg-eco-dark text-white">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                    <div class="stat-item">
+                        <p class="text-4xl md:text-5xl font-bold mb-2" id="stat-users">0</p>
+                        <p class="text-eco-light">Utilisateurs</p>
+                    </div>
+                    <div class="stat-item">
+                        <p class="text-4xl md:text-5xl font-bold mb-2" id="stat-calculs">0</p>
+                        <p class="text-eco-light">Calculs effectués</p>
+                    </div>
+                    <div class="stat-item">
+                        <p class="text-4xl md:text-5xl font-bold mb-2" id="stat-co2">0</p>
+                        <p class="text-eco-light">Tonnes CO₂ économisées</p>
+                    </div>
+                    <div class="stat-item">
+                        <p class="text-4xl md:text-5xl font-bold mb-2" id="stat-conseils">0</p>
+                        <p class="text-eco-light">Conseils appliqués</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Features Section -->
+        <section id="features" class="py-20 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Comment ça fonctionne ?</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto">Trois étapes simples pour comprendre et réduire votre impact environnemental</p>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Feature 1 -->
+                    <article class="bg-eco-bg p-8 rounded-2xl text-center hover:shadow-xl transition-shadow">
+                        <div class="w-20 h-20 bg-eco-green rounded-full flex items-center justify-center mx-auto mb-6">
+                            <span class="text-4xl">📝</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">1. Remplissez le questionnaire</h3>
+                        <p class="text-gray-600">Répondez à quelques questions sur vos habitudes de transport, alimentation, logement et consommation.</p>
+                    </article>
+                    
+                    <!-- Feature 2 -->
+                    <article class="bg-eco-bg p-8 rounded-2xl text-center hover:shadow-xl transition-shadow">
+                        <div class="w-20 h-20 bg-eco-green rounded-full flex items-center justify-center mx-auto mb-6">
+                            <span class="text-4xl">📊</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">2. Découvrez vos résultats</h3>
+                        <p class="text-gray-600">Visualisez votre empreinte carbone annuelle avec des graphiques détaillés par catégorie.</p>
+                    </article>
+                    
+                    <!-- Feature 3 -->
+                    <article class="bg-eco-bg p-8 rounded-2xl text-center hover:shadow-xl transition-shadow">
+                        <div class="w-20 h-20 bg-eco-green rounded-full flex items-center justify-center mx-auto mb-6">
+                            <span class="text-4xl">💡</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">3. Agissez au quotidien</h3>
+                        <p class="text-gray-600">Recevez des conseils personnalisés et suivez vos progrès dans votre tableau de bord.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Video Section -->
+        <section class="py-20 bg-gray-50">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Pourquoi agir maintenant ?</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto">Regardez cette vidéo pour comprendre l'urgence climatique et l'importance de chaque geste</p>
+                </div>
+                
+                <div class="max-w-4xl mx-auto">
+                    <div class="relative pb-[56.25%] h-0 overflow-hidden rounded-2xl shadow-2xl">
+                        <iframe 
+                            class="absolute top-0 left-0 w-full h-full"
+                            src="https://www.youtube.com/embed/ipVxxxqwBQw" 
+                            title="L'urgence climatique expliquée"
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Audio Section -->
+        <section class="py-16 bg-eco-green">
+            <div class="container mx-auto px-4">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-8">
+                    <div class="text-white">
+                        <h3 class="text-2xl font-bold mb-2">🎵 Ambiance EcoTrack</h3>
+                        <p class="text-eco-light">Une musique relaxante pour accompagner votre navigation</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl shadow-lg">
+                        <audio id="background-music" controls class="w-full md:w-80">
+                            <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+                            Votre navigateur ne supporte pas l'élément audio.
+                        </audio>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Testimonials Section -->
+        <section class="py-20 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Ce que disent nos utilisateurs</h2>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Testimonial 1 -->
+                    <article class="bg-gray-50 p-8 rounded-2xl">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-eco-green rounded-full flex items-center justify-center text-white font-bold mr-4">ML</div>
+                            <div>
+                                <h4 class="font-bold text-gray-800">Marie L.</h4>
+                                <p class="text-sm text-gray-500">Étudiante</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 italic">"Grâce à EcoTrack, j'ai réduit mon empreinte carbone de 30% en 6 mois. Les conseils sont vraiment pratiques et faciles à appliquer !"</p>
+                        <div class="mt-4 text-eco-green">★★★★★</div>
+                    </article>
+                    
+                    <!-- Testimonial 2 -->
+                    <article class="bg-gray-50 p-8 rounded-2xl">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-eco-dark rounded-full flex items-center justify-center text-white font-bold mr-4">PD</div>
+                            <div>
+                                <h4 class="font-bold text-gray-800">Pierre D.</h4>
+                                <p class="text-sm text-gray-500">Ingénieur</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 italic">"L'interface est intuitive et les graphiques permettent de vraiment comprendre où agir en priorité. Je recommande vivement !"</p>
+                        <div class="mt-4 text-eco-green">★★★★★</div>
+                    </article>
+                    
+                    <!-- Testimonial 3 -->
+                    <article class="bg-gray-50 p-8 rounded-2xl">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-eco-light rounded-full flex items-center justify-center text-eco-dark font-bold mr-4">SB</div>
+                            <div>
+                                <h4 class="font-bold text-gray-800">Sophie B.</h4>
+                                <p class="text-sm text-gray-500">Enseignante</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 italic">"J'utilise EcoTrack avec mes élèves pour les sensibiliser à l'écologie. C'est un excellent outil pédagogique !"</p>
+                        <div class="mt-4 text-eco-green">★★★★★</div>
+                    </article>
+                </div>
+            </div>
+        </section>
+        
+        <!-- CTA Section -->
+        <section class="py-20 bg-gradient-to-r from-eco-dark to-eco-green text-white">
+            <div class="container mx-auto px-4 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-6">Prêt à faire la différence ?</h2>
+                <p class="text-xl mb-8 max-w-2xl mx-auto text-eco-light">Rejoignez des milliers d'utilisateurs qui agissent pour la planète</p>
+                <a href="inscription.html" class="inline-block px-10 py-4 bg-white text-eco-dark text-lg font-bold rounded-xl hover:bg-eco-light transition-all transform hover:scale-105 shadow-lg">
+                    Créer mon compte gratuitement
+                </a>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <!-- Logo & Description -->
+                <div class="md:col-span-2">
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-10 h-10 bg-eco-green rounded-full flex items-center justify-center">
+                            <span class="text-white text-xl">🌱</span>
+                        </div>
+                        <span class="text-2xl font-bold">EcoTrack</span>
+                    </div>
+                    <p class="text-gray-400 mb-4">Votre compagnon pour un mode de vie plus respectueux de l'environnement. Calculez, comprenez et réduisez votre empreinte carbone.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-eco-green transition-colors text-2xl">📘</a>
+                        <a href="#" class="text-gray-400 hover:text-eco-green transition-colors text-2xl">🐦</a>
+                        <a href="#" class="text-gray-400 hover:text-eco-green transition-colors text-2xl">📸</a>
+                        <a href="#" class="text-gray-400 hover:text-eco-green transition-colors text-2xl">💼</a>
+                    </div>
+                </div>
+                
+                <!-- Liens rapides -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Liens rapides</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-eco-green transition-colors">Accueil</a></li>
+                        <li><a href="calculateur.html" class="text-gray-400 hover:text-eco-green transition-colors">Calculateur</a></li>
+                        <li><a href="conseils.html" class="text-gray-400 hover:text-eco-green transition-colors">Conseils</a></li>
+                        <li><a href="a-propos.html" class="text-gray-400 hover:text-eco-green transition-colors">À propos</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Contact</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li>📧 contact@ecotrack.fr</li>
+                        <li>📍 Le Mans, France</li>
+                        <li>🏫 ENSIM - Projet Web</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500">
+                <p>&copy; 2026 EcoTrack - KOUAM Brice. Tous droits réservés.</p>
+                <p class="mt-2 text-sm">Projet réalisé dans le cadre du cours de Technologie de l'Internet - ENSIM</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+</body>
+</html>
