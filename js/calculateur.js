@@ -672,6 +672,42 @@ function resetCalculator() {
 // ============================================
 
 /**
+ * Sauvegarde les résultats en base de données via API PHP
+ * @param {Object} results - Les résultats du calcul
+ */
+function saveResultsToDatabase(results) {
+    const payload = {
+        transport_co2: results.transport,
+        alimentation_co2: results.food,
+        logement_co2: results.housing,
+        consommation_co2: results.consumption,
+        total_co2: results.total,
+        details: results.data
+    };
+    
+    // Appel API asynchrone (ne bloque pas l'affichage)
+    fetch('php/sauvegarder_calcul.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            console.log('✅ Calcul sauvegardé en BDD:', data.calcul_id);
+        } else {
+            console.warn('⚠️ Sauvegarde BDD:', data.message);
+        }
+    })
+    .catch(error => {
+        // Silencieux - ne pas bloquer l'utilisateur
+        console.log('ℹ️ Sauvegarde locale uniquement (BDD non disponible)');
+    });
+}
+
+/**
  * Gère la soumission du formulaire
  * @param {Event} event - L'événement de soumission
  */
@@ -689,6 +725,9 @@ function handleFormSubmit(event) {
         date: new Date().toISOString(),
         results: results
     }));
+    
+    // Sauvegarder en base de données (asynchrone)
+    saveResultsToDatabase(results);
     
     // Scroll vers le haut avant d'afficher les résultats
     window.scrollTo({ top: 0, behavior: 'smooth' });
