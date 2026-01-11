@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Découvrez nos conseils pratiques pour réduire votre empreinte carbone au quotidien">
+    <meta name="author" content="KOUAM Brice">
+    <title>Conseils Écologiques - EcoTrack</title>
+    
+    <!-- Google Fonts - Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'poppins': ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        'eco-green': '#22c55e',
+                        'eco-dark': '#15803d',
+                        'eco-light': '#86efac',
+                        'eco-bg': '#f0fdf4',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="font-poppins bg-gray-50">
+    
+    <!-- Header -->
+    <header class="bg-white shadow-md fixed w-full top-0 z-50">
+        <nav class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <a href="index.html" class="flex items-center space-x-2">
+                    <div class="w-10 h-10 bg-eco-green rounded-full flex items-center justify-center">
+                        <span class="text-white text-xl">🌱</span>
+                    </div>
+                    <span class="text-2xl font-bold text-eco-dark">EcoTrack</span>
+                </a>
+                
+                <ul class="hidden md:flex space-x-8">
+                    <li><a href="index.html" class="text-gray-600 hover:text-eco-green transition-colors">Accueil</a></li>
+                    <li><a href="calculateur.html" class="text-gray-600 hover:text-eco-green transition-colors">Calculateur</a></li>
+                    <li><a href="conseils.html" class="text-eco-dark font-medium border-b-2 border-eco-green pb-1">Conseils</a></li>
+                    <li><a href="a-propos.html" class="text-gray-600 hover:text-eco-green transition-colors">À propos</a></li>
+                </ul>
+                
+                <a href="connexion.html" class="hidden md:flex px-6 py-2 bg-eco-green text-white rounded-full hover:bg-eco-dark transition-all">
+                    Connexion
+                </a>
+                
+                <!-- Menu mobile -->
+                <button id="menuToggle" class="md:hidden p-2">
+                    <span class="block w-6 h-0.5 bg-gray-600 mb-1.5"></span>
+                    <span class="block w-6 h-0.5 bg-gray-600 mb-1.5"></span>
+                    <span class="block w-6 h-0.5 bg-gray-600"></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+    
+    <!-- Main Content -->
+    <main class="pt-24 pb-12">
+        
+        <!-- Hero Section -->
+        <section class="bg-gradient-to-r from-eco-green to-eco-dark py-16 text-white">
+            <div class="container mx-auto px-4 text-center">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">Conseils Écologiques</h1>
+                <p class="text-xl opacity-90 max-w-2xl mx-auto">
+                    Des gestes simples pour un impact réel sur notre planète
+                </p>
+            </div>
+        </section>
+        
+        <!-- Filtres par catégorie -->
+        <section class="py-8 bg-white shadow-md sticky top-20 z-40">
+            <div class="container mx-auto px-4">
+                <div class="flex flex-wrap justify-center gap-4">
+                    <button class="filter-btn active px-6 py-2 rounded-full border-2 border-eco-green bg-eco-green text-white font-medium transition-all" data-filter="all">
+                        Tous
+                    </button>
+                    <button class="filter-btn px-6 py-2 rounded-full border-2 border-gray-300 text-gray-600 font-medium hover:border-eco-green hover:text-eco-green transition-all" data-filter="transport">
+                        🚗 Transport
+                    </button>
+                    <button class="filter-btn px-6 py-2 rounded-full border-2 border-gray-300 text-gray-600 font-medium hover:border-eco-green hover:text-eco-green transition-all" data-filter="maison">
+                        🏠 Maison
+                    </button>
+                    <button class="filter-btn px-6 py-2 rounded-full border-2 border-gray-300 text-gray-600 font-medium hover:border-eco-green hover:text-eco-green transition-all" data-filter="alimentation">
+                        🍽️ Alimentation
+                    </button>
+                    <button class="filter-btn px-6 py-2 rounded-full border-2 border-gray-300 text-gray-600 font-medium hover:border-eco-green hover:text-eco-green transition-all" data-filter="consommation">
+                        🛒 Consommation
+                    </button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Grille de conseils -->
+        <section class="py-12">
+            <div class="container mx-auto px-4">
+                <div id="conseilsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    
+                    <!-- Conseil Transport 1 -->
+                    <article class="conseil-card bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all transform hover:-translate-y-2" data-category="transport">
+                        <div class="h-48 bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center">
+                            <span class="text-7xl">🚲</span>
+                        </div>
+                        <div class="p-6">
+                            <span class="inline-block px-3 py-1 bg-green-100 text-green-800 text-xs font-medium rounded-full mb-3">Transport</span>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Adoptez le vélo</h3>
+                            <p class="text-gray-600 mb-4">Pour les trajets de moins de 5 km, le vélo est souvent plus rapide que la voiture en ville. En plus, c'est bon pour la santé !</p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-eco-green font-bold">-500 kg CO₂/an</span>
+                                <span class="text-sm text-gray-400">Facile</span>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <!-- Conseil Transport 2 -->
+                    <article class="conseil-card bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all transform hover:-translate-y-2" data-category="transport">
+                        <div class="h-48 bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
+                            <span class="text-7xl">🚆</span>
+                        </div>
+                        <div class="p-6">
+                            <span class="inline-block px-3 py-1 bg-blue-100 text-blue-800 text-xs font-medium rounded-full mb-3">Transport</span>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Préférez le train</h3>
+                            <p class="text-gray-600 mb-4">Un Paris-Lyon en train émet 50x moins de CO₂ qu'en avion. Profitez du voyage pour lire ou travailler.</p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-eco-green font-bold">-1.5 t CO₂/an</span>
+                                <span class="text-sm text-gray-400">Moyen</span>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <!-- Conseil Transport 3 -->
+                    <article class="conseil-card bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all transform hover:-translate-y-2" data-category="transport">
+                        <div class="h-48 bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center">
+                            <span class="text-7xl">🚗</span>
+                        </div>
+                        <div class="p-6">
+                            <span class="inline-block px-3 py-1 bg-purple-100 text-purple-800 text-xs font-medium rounded-full mb-3">Transport</span>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Covoiturage</h3>
+                            <p class="text-gray-600 mb-4">Partagez vos trajets domicile-travail. Une voiture partagée à 3, c'est 66% d'émissions en moins par personne.</p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-eco-green font-bold">-800 kg CO₂/an</span>
+                                <span class="text-sm text-gray-400">Facile</span>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <!-- Conseil Maison 1 -->
+                    <article class="conseil-card bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all transform hover:-translate-y-2" data-category="maison">
+                        <div class="h-48 bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center">
+                            <span class="text-7xl">🌡️</span>
+                        </div>
+                        <div class="p-6">
+                            <span class="inline-block px-3 py-1 bg-yellow-100 text-yellow-800 text-xs font-medium rounded-full mb-3">Maison</span>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Baissez le chauffage</h3>
+                            <p class="text-gray-600 mb-4">Chaque degré en moins représente 7% d'économie d'énergie. 19°C dans le salon, 17°C dans les chambres.</p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-eco-green font-bold">-350 kg CO₂/an</span>
+                                <span class="text-sm text-gray-400">Facile</span>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <!-- Conseil Maison 2 -->
+                    <article class="conseil-card bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all transform hover:-translate-y-2" data-category="maison">
+                        <div class="h-48 bg-gradient-to-br from-cyan-400 to-cyan-600 flex items-center justify-center">
+                            <span class="text-7xl">💡</span>
+                        </div>
+                        <div class="p-6">
+                            <span class="inline-block px-3 py-1 bg-cyan-100 text-cyan-800 text-xs font-medium rounded-full mb-3">Maison</span>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Passez aux LED</h3>
+                            <p class="text-gray-600 mb-4">Les ampoules LED consomment 80% moins d'électricité et durent 25 fois plus longtemps que les incandescentes.</p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-eco-green font-bold">-100 kg CO₂/an</span>
+                                <span class="text-sm text-gray-400">Facile</span>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <!-- Conseil Maison 3 -->
+                    <article class="conseil-card bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all transform hover:-translate-y-2" data-category="maison">
+                        <div class="h-48 bg-gradient-to-br from-teal-400 to-teal-600 flex items-center justify-center">
+                            <span class="text-7xl">🚿</span>
+                        </div>
+                        <div class="p-6">
+                            <span class="inline-block px-3 py-1 bg-teal-100 text-teal-800 text-xs font-medium rounded-full mb-3">Maison</span>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Douches courtes</h3>
+                            <p class="text-gray-600 mb-4">Une douche de 5 min consomme 60L d'eau contre 200L pour un bain. Installez un minuteur dans la salle de bain.</p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-eco-green font-bold">-150 kg CO₂/an</span>
+                                <span class="text-sm text-gray-400">Facile</span>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <!-- Conseil Alimentation 1 -->
+                    <article class="conseil-card bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all transform hover:-translate-y-2" data-category="alimentation">
+                        <div class="h-48 bg-gradient-to-br from-red-400 to-red-600 flex items-center justify-center">
+                            <span class="text-7xl">🥗</span>
+                        </div>
+                        <div class="p-6">
+                            <span class="inline-block px-3 py-1 bg-red-100 text-red-800 text-xs font-medium rounded-full mb-3">Alimentation</span>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Réduisez la viande</h3>
+                            <p class="text-gray-600 mb-4">Un jour végétarien par semaine suffit pour faire une vraie différence. Découvrez les protéines végétales !</p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-eco-green font-bold">-600 kg CO₂/an</span>
+                                <span class="text-sm text-gray-400">Moyen</span>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <!-- Conseil Alimentation 2 -->
+                    <article class="conseil-card bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all transform hover:-translate-y-2" data-category="alimentation">
+                        <div class="h-48 bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center">
+                            <span class="text-7xl">🌽</span>
+                        </div>
+                        <div class="p-6">
+                            <span class="inline-block px-3 py-1 bg-amber-100 text-amber-800 text-xs font-medium rounded-full mb-3">Alimentation</span>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Mangez local et de saison</h3>
+                            <p class="text-gray-600 mb-4">Les tomates en hiver viennent de loin. Privilégiez les circuits courts et les marchés locaux.</p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-eco-green font-bold">-200 kg CO₂/an</span>
+                                <span class="text-sm text-gray-400">Facile</span>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <!-- Conseil Alimentation 3 -->
+                    <article class="conseil-card bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all transform hover:-translate-y-2" data-category="alimentation">
+                        <div class="h-48 bg-gradient-to-br from-lime-400 to-lime-600 flex items-center justify-center">
+                            <span class="text-7xl">🗑️</span>
+                        </div>
+                        <div class="p-6">
+                            <span class="inline-block px-3 py-1 bg-lime-100 text-lime-800 text-xs font-medium rounded-full mb-3">Alimentation</span>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Évitez le gaspillage</h3>
+                            <p class="text-gray-600 mb-4">30% de la nourriture produite finit à la poubelle. Planifiez vos repas et utilisez les restes.</p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-eco-green font-bold">-300 kg CO₂/an</span>
+                                <span class="text-sm text-gray-400">Facile</span>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <!-- Conseil Consommation 1 -->
+                    <article class="conseil-card bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all transform hover:-translate-y-2" data-category="consommation">
+                        <div class="h-48 bg-gradient-to-br from-pink-400 to-pink-600 flex items-center justify-center">
+                            <span class="text-7xl">👕</span>
+                        </div>
+                        <div class="p-6">
+                            <span class="inline-block px-3 py-1 bg-pink-100 text-pink-800 text-xs font-medium rounded-full mb-3">Consommation</span>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Mode seconde main</h3>
+                            <p class="text-gray-600 mb-4">La fast fashion pollue énormément. Achetez d'occasion ou privilégiez les vêtements durables.</p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-eco-green font-bold">-400 kg CO₂/an</span>
+                                <span class="text-sm text-gray-400">Facile</span>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <!-- Conseil Consommation 2 -->
+                    <article class="conseil-card bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all transform hover:-translate-y-2" data-category="consommation">
+                        <div class="h-48 bg-gradient-to-br from-indigo-400 to-indigo-600 flex items-center justify-center">
+                            <span class="text-7xl">📱</span>
+                        </div>
+                        <div class="p-6">
+                            <span class="inline-block px-3 py-1 bg-indigo-100 text-indigo-800 text-xs font-medium rounded-full mb-3">Consommation</span>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Gardez vos appareils</h3>
+                            <p class="text-gray-600 mb-4">La fabrication d'un smartphone génère 70 kg de CO₂. Faites-le durer au lieu de le changer chaque année.</p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-eco-green font-bold">-200 kg CO₂/an</span>
+                                <span class="text-sm text-gray-400">Facile</span>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <!-- Conseil Consommation 3 -->
+                    <article class="conseil-card bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all transform hover:-translate-y-2" data-category="consommation">
+                        <div class="h-48 bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center">
+                            <span class="text-7xl">♻️</span>
+                        </div>
+                        <div class="p-6">
+                            <span class="inline-block px-3 py-1 bg-emerald-100 text-emerald-800 text-xs font-medium rounded-full mb-3">Consommation</span>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Triez et recyclez</h3>
+                            <p class="text-gray-600 mb-4">Le recyclage permet d'économiser les ressources naturelles et de réduire les déchets en décharge.</p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-eco-green font-bold">-100 kg CO₂/an</span>
+                                <span class="text-sm text-gray-400">Facile</span>
+                            </div>
+                        </div>
+                    </article>
+                    
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section Quiz interactif -->
+        <section class="py-16 bg-gradient-to-r from-eco-green to-eco-dark">
+            <div class="container mx-auto px-4 text-center">
+                <h2 class="text-3xl font-bold text-white mb-4">Prêt à agir ?</h2>
+                <p class="text-white opacity-90 mb-8 max-w-xl mx-auto">
+                    Calculez votre empreinte carbone et découvrez des conseils personnalisés pour la réduire.
+                </p>
+                <a href="calculateur.html" class="inline-block px-8 py-4 bg-white text-eco-dark rounded-full font-semibold hover:shadow-lg transform hover:scale-105 transition-all">
+                    📊 Calculer mon empreinte
+                </a>
+            </div>
+        </section>
+        
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-10 h-10 bg-eco-green rounded-full flex items-center justify-center">
+                            <span class="text-white text-xl">🌱</span>
+                        </div>
+                        <span class="text-xl font-bold">EcoTrack</span>
+                    </div>
+                    <p class="text-gray-400">Ensemble, réduisons notre empreinte carbone pour un avenir durable.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Navigation</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="index.html" class="hover:text-eco-green transition-colors">Accueil</a></li>
+                        <li><a href="calculateur.html" class="hover:text-eco-green transition-colors">Calculateur</a></li>
+                        <li><a href="conseils.html" class="hover:text-eco-green transition-colors">Conseils</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Compte</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="connexion.html" class="hover:text-eco-green transition-colors">Connexion</a></li>
+                        <li><a href="inscription.html" class="hover:text-eco-green transition-colors">Inscription</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Contact</h4>
+                    <p class="text-gray-400">KOUAM Brice</p>
+                    <p class="text-gray-400">ENSIM - Le Mans</p>
+                    <p class="text-gray-400">contact@ecotrack.fr</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2026 EcoTrack - Projet Technologie Internet ENSIM</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- JavaScript -->
+    <script>
+        // Filtrage des conseils
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const cards = document.querySelectorAll('.conseil-card');
+            
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Retirer la classe active de tous les boutons
+                    filterBtns.forEach(b => {
+                        b.classList.remove('active', 'bg-eco-green', 'text-white', 'border-eco-green');
+                        b.classList.add('border-gray-300', 'text-gray-600');
+                    });
+                    
+                    // Ajouter la classe active au bouton cliqué
+                    this.classList.add('active', 'bg-eco-green', 'text-white', 'border-eco-green');
+                    this.classList.remove('border-gray-300', 'text-gray-600');
+                    
+                    const filter = this.dataset.filter;
+                    
+                    // Filtrer les cartes avec animation
+                    cards.forEach(card => {
+                        if (filter === 'all' || card.dataset.category === filter) {
+                            card.style.display = 'block';
+                            card.style.opacity = '0';
+                            card.style.transform = 'translateY(20px)';
+                            
+                            setTimeout(() => {
+                                card.style.transition = 'all 0.3s ease';
+                                card.style.opacity = '1';
+                                card.style.transform = 'translateY(0)';
+                            }, 50);
+                        } else {
+                            card.style.opacity = '0';
+                            card.style.transform = 'translateY(-20px)';
+                            setTimeout(() => {
+                                card.style.display = 'none';
+                            }, 300);
+                        }
+                    });
+                });
+            });
+            
+            // Animation au scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+            
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = 'all 0.5s ease';
+                observer.observe(card);
+            });
+        });
+    </script>
+    <script src="js/main.js"></script>
+</body>
+</html>

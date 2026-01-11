@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Calculez votre empreinte carbone personnelle avec EcoTrack - Un outil simple et interactif">
+    <meta name="author" content="KOUAM Brice">
+    <title>Calculateur d'Empreinte Carbone - EcoTrack</title>
+    
+    <!-- Google Fonts - Poppins uniquement -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'poppins': ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        'eco-green': '#22c55e',
+                        'eco-dark': '#15803d',
+                        'eco-light': '#86efac',
+                        'eco-bg': '#f0fdf4',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <style>
+        /* Animations spécifiques au calculateur */
+        @keyframes pulse-ring {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(1.5); opacity: 0; }
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes countUp {
+            from { opacity: 0; transform: scale(0.5); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        @keyframes rotateIn {
+            from { opacity: 0; transform: rotate(-10deg) scale(0.9); }
+            to { opacity: 1; transform: rotate(0) scale(1); }
+        }
+        
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .slide-up { animation: slideUp 0.6s ease forwards; }
+        .count-up { animation: countUp 0.5s ease forwards; }
+        .rotate-in { animation: rotateIn 0.5s ease forwards; }
+        .breathe { animation: breathe 2s ease-in-out infinite; }
+        
+        /* Step indicator */
+        .step-circle {
+            transition: all 0.3s ease;
+        }
+        
+        .step-circle.active {
+            background: linear-gradient(135deg, #22c55e, #15803d);
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(34, 197, 94, 0.5);
+        }
+        
+        .step-circle.completed {
+            background: #22c55e;
+        }
+        
+        /* Progress bar animation */
+        .progress-fill {
+            transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* Range slider personnalisé */
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 5px;
+            outline: none;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, #22c55e, #15803d);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+        
+        /* Carte de résultat */
+        .result-card {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 50%, #bbf7d0 100%);
+        }
+        
+        /* Toggle switches */
+        .toggle-container input:checked + .toggle-bg {
+            background-color: #22c55e;
+        }
+        
+        .toggle-container input:checked + .toggle-bg .toggle-dot {
+            transform: translateX(100%);
+        }
+        
+        /* Option cards */
+        .option-card {
+            transition: all 0.3s ease;
+        }
+        
+        .option-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .option-card.selected {
+            border-color: #22c55e;
+            background-color: #f0fdf4;
+            box-shadow: 0 0 20px rgba(34, 197, 94, 0.3);
+        }
+        
+        .option-card.selected .check-mark {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        .check-mark {
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body class="font-poppins bg-gradient-to-br from-gray-50 to-eco-bg min-h-screen">
+    
+    <!-- Header -->
+    <header class="bg-white shadow-md fixed w-full top-0 z-50">
+        <nav class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <a href="index.html" class="flex items-center space-x-2">
+                    <div class="w-10 h-10 bg-eco-green rounded-full flex items-center justify-center">
+                        <span class="text-white text-xl">🌱</span>
+                    </div>
+                    <span class="text-2xl font-bold text-eco-dark">EcoTrack</span>
+                </a>
+                
+                <ul class="hidden md:flex space-x-8">
+                    <li><a href="index.html" class="text-gray-600 hover:text-eco-green transition-colors">Accueil</a></li>
+                    <li><a href="calculateur.html" class="text-eco-dark font-medium border-b-2 border-eco-green pb-1">Calculateur</a></li>
+                    <li><a href="conseils.html" class="text-gray-600 hover:text-eco-green transition-colors">Conseils</a></li>
+                    <li><a href="a-propos.html" class="text-gray-600 hover:text-eco-green transition-colors">À propos</a></li>
+                </ul>
+                
+                <a href="connexion.html" class="hidden md:flex px-6 py-2 bg-eco-green text-white rounded-full hover:bg-eco-dark transition-all">
+                    Connexion
+                </a>
+            </div>
+        </nav>
+    </header>
+    
+    <!-- Main Content -->
+    <main class="pt-24 pb-12">
+        <div class="container mx-auto px-4 max-w-4xl">
+            
+            <!-- Titre -->
+            <div class="text-center mb-12">
+                <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+                    Calculez votre <span class="text-eco-green">empreinte carbone</span>
+                </h1>
+                <p class="text-gray-600 max-w-xl mx-auto">
+                    Répondez à quelques questions simples pour découvrir votre impact 
+                    environnemental et recevoir des conseils personnalisés.
+                </p>
+            </div>
+            
+            <!-- Indicateur de progression -->
+            <div class="mb-8">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="text-sm font-medium text-gray-600">Progression</span>
+                    <span id="progressPercent" class="text-sm font-bold text-eco-green">0%</span>
+                </div>
+                <div class="w-full h-3 bg-gray-200 rounded-full overflow-hidden">
+                    <div id="progressBar" class="progress-fill h-full bg-gradient-to-r from-eco-green to-eco-dark w-0 rounded-full"></div>
+                </div>
+            </div>
+            
+            <!-- Steps indicators -->
+            <div class="flex justify-center mb-8">
+                <div class="flex items-center space-x-4">
+                    <div id="step1Indicator" class="step-circle active w-12 h-12 rounded-full flex items-center justify-center text-white font-bold cursor-pointer">
+                        🚗
+                    </div>
+                    <div class="w-12 h-1 bg-gray-200 rounded"></div>
+                    <div id="step2Indicator" class="step-circle bg-gray-300 w-12 h-12 rounded-full flex items-center justify-center text-white font-bold cursor-pointer">
+                        🏠
+                    </div>
+                    <div class="w-12 h-1 bg-gray-200 rounded"></div>
+                    <div id="step3Indicator" class="step-circle bg-gray-300 w-12 h-12 rounded-full flex items-center justify-center text-white font-bold cursor-pointer">
+                        🍽️
+                    </div>
+                    <div class="w-12 h-1 bg-gray-200 rounded"></div>
+                    <div id="step4Indicator" class="step-circle bg-gray-300 w-12 h-12 rounded-full flex items-center justify-center text-white font-bold cursor-pointer">
+                        🛒
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Formulaire de calcul -->
+            <form id="carbonForm" class="relative">
+                
+                <!-- Étape 1: Transport -->
+                <section id="step1" class="step-section bg-white rounded-2xl shadow-lg p-8 mb-8 slide-up">
+                    <div class="flex items-center mb-6">
+                        <span class="text-4xl mr-4">🚗</span>
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-800">Transport</h2>
+                            <p class="text-gray-500">Comment vous déplacez-vous ?</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Distance voiture -->
+                    <div class="mb-8">
+                        <label class="block text-gray-700 font-medium mb-2">
+                            Distance en voiture par semaine (km)
+                        </label>
+                        <div class="flex items-center space-x-4">
+                            <input type="range" id="carDistance" name="carDistance" min="0" max="500" value="100" class="flex-1">
+                            <span id="carDistanceValue" class="text-2xl font-bold text-eco-dark w-24 text-center">100 km</span>
+                        </div>
+                        <div class="flex justify-between text-xs text-gray-400 mt-1">
+                            <span>0 km</span>
+                            <span>500 km</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Type de véhicule -->
+                    <div class="mb-8">
+                        <label class="block text-gray-700 font-medium mb-4">Type de véhicule</label>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <div class="option-card border-2 border-gray-200 rounded-xl p-4 text-center cursor-pointer relative" data-value="none">
+                                <span class="check-mark absolute top-2 right-2 text-eco-green text-xl">✓</span>
+                                <span class="text-3xl mb-2 block">🚶</span>
+                                <span class="text-sm font-medium">Pas de voiture</span>
+                            </div>
+                            <div class="option-card border-2 border-gray-200 rounded-xl p-4 text-center cursor-pointer relative selected" data-value="essence">
+                                <span class="check-mark absolute top-2 right-2 text-eco-green text-xl">✓</span>
+                                <span class="text-3xl mb-2 block">⛽</span>
+                                <span class="text-sm font-medium">Essence</span>
+                            </div>
+                            <div class="option-card border-2 border-gray-200 rounded-xl p-4 text-center cursor-pointer relative" data-value="diesel">
+                                <span class="check-mark absolute top-2 right-2 text-eco-green text-xl">✓</span>
+                                <span class="text-3xl mb-2 block">🛢️</span>
+                                <span class="text-sm font-medium">Diesel</span>
+                            </div>
+                            <div class="option-card border-2 border-gray-200 rounded-xl p-4 text-center cursor-pointer relative" data-value="electrique">
+                                <span class="check-mark absolute top-2 right-2 text-eco-green text-xl">✓</span>
+                                <span class="text-3xl mb-2 block">🔋</span>
+                                <span class="text-sm font-medium">Électrique</span>
+                            </div>
+                        </div>
+                        <input type="hidden" id="carType" name="carType" value="essence">
+                    </div>
+                    
+                    <!-- Vols par an -->
+                    <div class="mb-6">
+                        <label class="block text-gray-700 font-medium mb-2">
+                            Nombre de vols par an
+                        </label>
+                        <div class="flex items-center justify-center space-x-6">
+                            <button type="button" id="flightMinus" class="w-12 h-12 bg-gray-200 rounded-full text-2xl font-bold hover:bg-gray-300 transition-colors">-</button>
+                            <div class="text-center">
+                                <span id="flightCount" class="text-5xl font-bold text-eco-dark">2</span>
+                                <p class="text-sm text-gray-500">vols</p>
+                            </div>
+                            <button type="button" id="flightPlus" class="w-12 h-12 bg-eco-green rounded-full text-2xl font-bold text-white hover:bg-eco-dark transition-colors">+</button>
+                        </div>
+                        <input type="hidden" id="flights" name="flights" value="2">
+                    </div>
+                    
+                    <div class="flex justify-end">
+                        <button type="button" onclick="nextStep(1)" class="px-8 py-3 bg-eco-green text-white rounded-xl font-semibold hover:bg-eco-dark transition-all transform hover:scale-105">
+                            Suivant →
+                        </button>
+                    </div>
+                </section>
+                
+                <!-- Étape 2: Logement -->
+                <section id="step2" class="step-section hidden bg-white rounded-2xl shadow-lg p-8 mb-8">
+                    <div class="flex items-center mb-6">
+                        <span class="text-4xl mr-4">🏠</span>
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-800">Logement</h2>
+                            <p class="text-gray-500">Votre habitat et consommation énergétique</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Surface -->
+                    <div class="mb-8">
+                        <label class="block text-gray-700 font-medium mb-2">
+                            Surface du logement (m²)
+                        </label>
+                        <div class="flex items-center space-x-4">
+                            <input type="range" id="homeSize" name="homeSize" min="10" max="200" value="70" class="flex-1">
+                            <span id="homeSizeValue" class="text-2xl font-bold text-eco-dark w-24 text-center">70 m²</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Type de chauffage -->
+                    <div class="mb-8">
+                        <label class="block text-gray-700 font-medium mb-4">Type de chauffage</label>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <div class="option-card border-2 border-gray-200 rounded-xl p-4 text-center cursor-pointer relative" data-value="electrique">
+                                <span class="check-mark absolute top-2 right-2 text-eco-green text-xl">✓</span>
+                                <span class="text-3xl mb-2 block">⚡</span>
+                                <span class="text-sm font-medium">Électrique</span>
+                            </div>
+                            <div class="option-card border-2 border-gray-200 rounded-xl p-4 text-center cursor-pointer relative selected" data-value="gaz">
+                                <span class="check-mark absolute top-2 right-2 text-eco-green text-xl">✓</span>
+                                <span class="text-3xl mb-2 block">🔥</span>
+                                <span class="text-sm font-medium">Gaz</span>
+                            </div>
+                            <div class="option-card border-2 border-gray-200 rounded-xl p-4 text-center cursor-pointer relative" data-value="fioul">
+                                <span class="check-mark absolute top-2 right-2 text-eco-green text-xl">✓</span>
+                                <span class="text-3xl mb-2 block">🛢️</span>
+                                <span class="text-sm font-medium">Fioul</span>
+                            </div>
+                            <div class="option-card border-2 border-gray-200 rounded-xl p-4 text-center cursor-pointer relative" data-value="pompe">
+                                <span class="check-mark absolute top-2 right-2 text-eco-green text-xl">✓</span>
+                                <span class="text-3xl mb-2 block">🌡️</span>
+                                <span class="text-sm font-medium">Pompe à chaleur</span>
+                            </div>
+                        </div>
+                        <input type="hidden" id="heatingType" name="heatingType" value="gaz">
+                    </div>
+                    
+                    <!-- Nombre d'habitants -->
+                    <div class="mb-6">
+                        <label class="block text-gray-700 font-medium mb-2">
+                            Nombre de personnes dans le foyer
+                        </label>
+                        <div class="flex items-center justify-center space-x-6">
+                            <button type="button" id="peopleMinus" class="w-12 h-12 bg-gray-200 rounded-full text-2xl font-bold hover:bg-gray-300 transition-colors">-</button>
+                            <div class="text-center">
+                                <span id="peopleCount" class="text-5xl font-bold text-eco-dark">2</span>
+                                <p class="text-sm text-gray-500">personnes</p>
+                            </div>
+                            <button type="button" id="peoplePlus" class="w-12 h-12 bg-eco-green rounded-full text-2xl font-bold text-white hover:bg-eco-dark transition-colors">+</button>
+                        </div>
+                        <input type="hidden" id="people" name="people" value="2">
+                    </div>
+                    
+                    <div class="flex justify-between">
+                        <button type="button" onclick="prevStep(2)" class="px-8 py-3 border-2 border-gray-300 text-gray-600 rounded-xl font-semibold hover:border-eco-green hover:text-eco-green transition-all">
+                            ← Précédent
+                        </button>
+                        <button type="button" onclick="nextStep(2)" class="px-8 py-3 bg-eco-green text-white rounded-xl font-semibold hover:bg-eco-dark transition-all transform hover:scale-105">
+                            Suivant →
+                        </button>
+                    </div>
+                </section>
+                
+                <!-- Étape 3: Alimentation -->
+                <section id="step3" class="step-section hidden bg-white rounded-2xl shadow-lg p-8 mb-8">
+                    <div class="flex items-center mb-6">
+                        <span class="text-4xl mr-4">🍽️</span>
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-800">Alimentation</h2>
+                            <p class="text-gray-500">Vos habitudes alimentaires</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Régime alimentaire -->
+                    <div class="mb-8">
+                        <label class="block text-gray-700 font-medium mb-4">Votre régime alimentaire</label>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="option-card border-2 border-gray-200 rounded-xl p-6 text-center cursor-pointer relative" data-value="vegan">
+                                <span class="check-mark absolute top-2 right-2 text-eco-green text-xl">✓</span>
+                                <span class="text-4xl mb-3 block">🥬</span>
+                                <span class="font-semibold block mb-1">Végétalien</span>
+                                <span class="text-xs text-gray-500">Aucun produit animal</span>
+                            </div>
+                            <div class="option-card border-2 border-gray-200 rounded-xl p-6 text-center cursor-pointer relative" data-value="vegetarian">
+                                <span class="check-mark absolute top-2 right-2 text-eco-green text-xl">✓</span>
+                                <span class="text-4xl mb-3 block">🥗</span>
+                                <span class="font-semibold block mb-1">Végétarien</span>
+                                <span class="text-xs text-gray-500">Œufs, lait, fromage</span>
+                            </div>
+                            <div class="option-card border-2 border-gray-200 rounded-xl p-6 text-center cursor-pointer relative selected" data-value="omnivore">
+                                <span class="check-mark absolute top-2 right-2 text-eco-green text-xl">✓</span>
+                                <span class="text-4xl mb-3 block">🍖</span>
+                                <span class="font-semibold block mb-1">Omnivore</span>
+                                <span class="text-xs text-gray-500">Viande régulièrement</span>
+                            </div>
+                        </div>
+                        <input type="hidden" id="diet" name="diet" value="omnivore">
+                    </div>
+                    
+                    <!-- Viande par semaine -->
+                    <div class="mb-8" id="meatSection">
+                        <label class="block text-gray-700 font-medium mb-2">
+                            Repas avec viande par semaine
+                        </label>
+                        <div class="flex items-center space-x-4">
+                            <input type="range" id="meatMeals" name="meatMeals" min="0" max="14" value="7" class="flex-1">
+                            <span id="meatMealsValue" class="text-2xl font-bold text-eco-dark w-24 text-center">7 repas</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Produits locaux -->
+                    <div class="mb-6">
+                        <label class="block text-gray-700 font-medium mb-4">Achetez-vous local ?</label>
+                        <div class="flex items-center space-x-4">
+                            <label class="toggle-container relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" id="localFood" name="localFood" checked class="sr-only peer">
+                                <div class="toggle-bg w-14 h-7 bg-gray-200 rounded-full peer-checked:bg-eco-green transition-colors">
+                                    <div class="toggle-dot absolute top-0.5 left-0.5 bg-white w-6 h-6 rounded-full transition-transform"></div>
+                                </div>
+                            </label>
+                            <span class="text-gray-600">Oui, je privilégie les produits locaux et de saison</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between">
+                        <button type="button" onclick="prevStep(3)" class="px-8 py-3 border-2 border-gray-300 text-gray-600 rounded-xl font-semibold hover:border-eco-green hover:text-eco-green transition-all">
+                            ← Précédent
+                        </button>
+                        <button type="button" onclick="nextStep(3)" class="px-8 py-3 bg-eco-green text-white rounded-xl font-semibold hover:bg-eco-dark transition-all transform hover:scale-105">
+                            Suivant →
+                        </button>
+                    </div>
+                </section>
+                
+                <!-- Étape 4: Consommation -->
+                <section id="step4" class="step-section hidden bg-white rounded-2xl shadow-lg p-8 mb-8">
+                    <div class="flex items-center mb-6">
+                        <span class="text-4xl mr-4">🛒</span>
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-800">Consommation</h2>
+                            <p class="text-gray-500">Vos achats et habitudes de consommation</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Achats de vêtements -->
+                    <div class="mb-8">
+                        <label class="block text-gray-700 font-medium mb-2">
+                            Achats de vêtements neufs par an
+                        </label>
+                        <div class="flex items-center space-x-4">
+                            <input type="range" id="clothes" name="clothes" min="0" max="50" value="15" class="flex-1">
+                            <span id="clothesValue" class="text-2xl font-bold text-eco-dark w-24 text-center">15 articles</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Appareils électroniques -->
+                    <div class="mb-8">
+                        <label class="block text-gray-700 font-medium mb-2">
+                            Appareils électroniques achetés par an
+                        </label>
+                        <div class="flex items-center justify-center space-x-6">
+                            <button type="button" id="electronicsMinus" class="w-12 h-12 bg-gray-200 rounded-full text-2xl font-bold hover:bg-gray-300 transition-colors">-</button>
+                            <div class="text-center">
+                                <span id="electronicsCount" class="text-5xl font-bold text-eco-dark">2</span>
+                                <p class="text-sm text-gray-500">appareils</p>
+                            </div>
+                            <button type="button" id="electronicsPlus" class="w-12 h-12 bg-eco-green rounded-full text-2xl font-bold text-white hover:bg-eco-dark transition-colors">+</button>
+                        </div>
+                        <input type="hidden" id="electronics" name="electronics" value="2">
+                    </div>
+                    
+                    <!-- Recyclage -->
+                    <div class="mb-6">
+                        <label class="block text-gray-700 font-medium mb-4">Triez-vous vos déchets ?</label>
+                        <div class="flex items-center space-x-4">
+                            <label class="toggle-container relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" id="recycling" name="recycling" checked class="sr-only peer">
+                                <div class="toggle-bg w-14 h-7 bg-gray-200 rounded-full peer-checked:bg-eco-green transition-colors">
+                                    <div class="toggle-dot absolute top-0.5 left-0.5 bg-white w-6 h-6 rounded-full transition-transform"></div>
+                                </div>
+                            </label>
+                            <span class="text-gray-600">Oui, je trie et recycle mes déchets</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between">
+                        <button type="button" onclick="prevStep(4)" class="px-8 py-3 border-2 border-gray-300 text-gray-600 rounded-xl font-semibold hover:border-eco-green hover:text-eco-green transition-all">
+                            ← Précédent
+                        </button>
+                        <button type="submit" class="px-8 py-3 bg-gradient-to-r from-eco-green to-eco-dark text-white rounded-xl font-semibold hover:shadow-lg transition-all transform hover:scale-105">
+                            📊 Calculer mon empreinte
+                        </button>
+                    </div>
+                </section>
+                
+            </form>
+            
+            <!-- Section Résultats (cachée initialement) -->
+            <section id="resultsSection" class="hidden">
+                <!-- Résultat principal -->
+                <div class="result-card rounded-2xl shadow-lg p-8 mb-8 text-center">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">Votre empreinte carbone annuelle</h2>
+                    
+                    <div class="relative inline-block my-8">
+                        <div class="w-48 h-48 mx-auto relative">
+                            <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                                <circle cx="50" cy="50" r="45" fill="none" stroke="#e5e7eb" stroke-width="8"/>
+                                <circle id="progressCircle" cx="50" cy="50" r="45" fill="none" stroke="#22c55e" stroke-width="8" 
+                                    stroke-dasharray="283" stroke-dashoffset="283" stroke-linecap="round"/>
+                            </svg>
+                            <div class="absolute inset-0 flex flex-col items-center justify-center">
+                                <span id="resultValue" class="text-4xl font-bold text-eco-dark">0</span>
+                                <span class="text-gray-600">tonnes CO₂</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="resultLevel" class="mb-4">
+                        <!-- Le niveau sera injecté ici -->
+                    </div>
+                    
+                    <p id="resultComparison" class="text-gray-600 mb-6">
+                        <!-- La comparaison sera injectée ici -->
+                    </p>
+                    
+                    <!-- Boutons d'action -->
+                    <div class="flex flex-wrap justify-center gap-4">
+                        <button onclick="resetCalculator()" class="px-6 py-3 border-2 border-eco-green text-eco-green rounded-xl font-semibold hover:bg-eco-green hover:text-white transition-all">
+                            🔄 Recalculer
+                        </button>
+                        <a href="conseils.html" class="px-6 py-3 bg-eco-green text-white rounded-xl font-semibold hover:bg-eco-dark transition-all">
+                            💡 Voir les conseils
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Répartition détaillée -->
+                <div class="bg-white rounded-2xl shadow-lg p-8">
+                    <h3 class="text-xl font-bold text-gray-800 mb-6">Répartition de votre empreinte</h3>
+                    
+                    <div class="space-y-6">
+                        <!-- Transport -->
+                        <div id="transportResult" class="category-result">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="flex items-center">
+                                    <span class="text-2xl mr-2">🚗</span>
+                                    <span class="font-medium">Transport</span>
+                                </span>
+                                <span class="font-bold text-eco-dark"><span class="value">0</span> t</span>
+                            </div>
+                            <div class="w-full h-4 bg-gray-200 rounded-full overflow-hidden">
+                                <div class="bar h-full bg-gradient-to-r from-eco-green to-eco-dark rounded-full transition-all duration-1000" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Logement -->
+                        <div id="logementResult" class="category-result">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="flex items-center">
+                                    <span class="text-2xl mr-2">🏠</span>
+                                    <span class="font-medium">Logement</span>
+                                </span>
+                                <span class="font-bold text-eco-dark"><span class="value">0</span> t</span>
+                            </div>
+                            <div class="w-full h-4 bg-gray-200 rounded-full overflow-hidden">
+                                <div class="bar h-full bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full transition-all duration-1000" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Alimentation -->
+                        <div id="alimentationResult" class="category-result">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="flex items-center">
+                                    <span class="text-2xl mr-2">🍽️</span>
+                                    <span class="font-medium">Alimentation</span>
+                                </span>
+                                <span class="font-bold text-eco-dark"><span class="value">0</span> t</span>
+                            </div>
+                            <div class="w-full h-4 bg-gray-200 rounded-full overflow-hidden">
+                                <div class="bar h-full bg-gradient-to-r from-blue-400 to-blue-600 rounded-full transition-all duration-1000" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Consommation -->
+                        <div id="consommationResult" class="category-result">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="flex items-center">
+                                    <span class="text-2xl mr-2">🛒</span>
+                                    <span class="font-medium">Consommation</span>
+                                </span>
+                                <span class="font-bold text-eco-dark"><span class="value">0</span> t</span>
+                            </div>
+                            <div class="w-full h-4 bg-gray-200 rounded-full overflow-hidden">
+                                <div class="bar h-full bg-gradient-to-r from-purple-400 to-purple-600 rounded-full transition-all duration-1000" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Conseils personnalisés -->
+                    <div id="personalizedTips" class="mt-8 pt-8 border-t border-gray-200">
+                        <h4 class="text-lg font-bold text-gray-800 mb-4">🎯 Conseils personnalisés pour vous</h4>
+                        <div id="tipsContainer" class="space-y-3">
+                            <!-- Les conseils seront injectés ici -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-6">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-gray-400">&copy; 2026 EcoTrack - KOUAM Brice. Tous droits réservés.</p>
+        </div>
+    </footer>
+    
+    <!-- JavaScript du calculateur -->
+    <script src="js/calculateur.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
